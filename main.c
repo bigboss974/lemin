@@ -7,12 +7,11 @@ int main (void)
 
     init_lemin(lemin);
     get_flux(lemin);
+    l_view_line(lemin->l_lines);
+
+ 
     create_rooms_list(lemin);
     create_link(lemin);
-
-#ifdef VERBOSE
-    printf ("====== Retour dans main () ======\n");
-#endif
 
     if (!get_ants_number(lemin)) 
     {
@@ -33,23 +32,8 @@ int main (void)
     printf ("Link in anthill ======\n");
     l_view_link(lemin->l_links);
     printf ("Total : [%d]\n", l_lenght(lemin->l_links));
-/*
-    printf ("\nMatrice adjacente ======\n");
-    int **matrice = create_adj_list(lemin);
-    display_adj_list(matrice, lemin->room_nb);
 
-    free (matrice);
-*/
     printf ("\nParcours BFS ======\n");
-    bfs(lemin, 2, lemin->room_nb);
-
-    clear_all(lemin);
-
-  
- /*   free (lnk);
-    free (l_links);
-    l_clear(l_rooms);
-    free (l_line);
-   free (roomname);
-*/
+    bfs(lemin, 0, lemin->room_nb);
+   clear_all(lemin);
 }

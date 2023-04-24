@@ -1,7 +1,15 @@
 #ifndef __LIST__H__
 #define __LIST__H__
 
-#include "lemin.h"
+// Type booléen (compatibilite avec tous le C ansii)
+#ifndef TYPE_BOOL
+#define TYPE_BOOL
+typedef enum
+{
+    false, // 0
+    true,  // 1
+} Bool;
+#endif
 
 typedef struct s_element
 {
@@ -24,14 +32,13 @@ void *l_pop_front(t_list *);
 
 void *l_get_last(t_list *);
 void *l_get_first(t_list *);
-int l_lenght (t_list *);
+int l_lenght(t_list *);
 
 void l_view(t_list *);
 void l_view_struct(t_list *);
 void l_view_line(t_list *);
 void l_view_link(t_list *);
 void l_view_node(t_list *);
-
 
 void l_clear(t_list *);
 void test_list(void);

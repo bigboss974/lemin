@@ -1,8 +1,10 @@
 /*
     GESTION DE FILE FIFO
 */
-//#include "queue.h"
-#include "lemin.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "queue.h"
 
 /*------------------------------------------------------------------
     init_queue () : Initilise la file
@@ -25,7 +27,7 @@ Queue init_queue(void)
 ------------------------------------------------------------------*/
 Bool is_empty_queue(Queue f)
 {
-    if (f == NULL)
+    if (f->first == NULL)
         return true;
     return false;
 }
@@ -43,13 +45,14 @@ void enqueue_queue(Queue q, void *data, size_t size)
         exit(EXIT_FAILURE);
     }
     new_element->data = malloc(size);
+    QueueElement *tmp = new_element->data;
     if (!new_element->data) exit (EXIT_FAILURE);
 
-    memmove(new_element->data, data, size);
-    new_element->next = NULL;
+    //memmove(new_element->data, data, size);
+    //new_element->next = NULL;
 
-    // new_element->data = data;
-    // new_element->next = NULL;
+    new_element->data = data;
+    new_element->next = NULL;
 
     if (q->first != NULL) // la file n'est pas vide
     {
@@ -65,6 +68,8 @@ void enqueue_queue(Queue q, void *data, size_t size)
     {
         q->first = new_element;
     }
+
+    free (tmp);
 }
 
 /*----------------------------------------------------------------*/
@@ -148,65 +153,31 @@ void delete_queue(Queue q)
     {
         QueueElement *aSupprimer = q->first;
         q->first = q->first->next;
+        free(aSupprimer->data);
         free(aSupprimer);
     }
+    free(q);
 }
 
 //! =============================================
 void queue_print_st(Queue q)
 {
-    t_room *ptr = (t_room *)malloc(sizeof(t_room));
+    //t_data *ptr = (t_data *)malloc(sizeof(t_data));
+    t_data *ptr =  NULL;
 
-    if (q == NULL || ptr == NULL)
+    if (q == NULL )
     {
         printf("queue_print_st () : Erreur allocation\n");
         exit(EXIT_FAILURE);
     }
 
     QueueElement *element = q->first;
-
     while (element != NULL)
     {
         ptr = element->data;
 
-        printf("[%d] [%s] [%d] \n", ptr->id, ptr->name, ptr->empty);
+        printf("[%d] [%s]\n", ptr->id, ptr->name);
         element = element->next;
     } // while
     printf("\n");
 }
-
-/*----------------------------------------------------------------
-   menu () ;   Fonction teste des appels de fonctions
-------------------------------------------------------------------*/
-void menu(void)
-{
-    Queue my_queue = init_queue();
-    t_data d1 = {1, "Chaine de 1\0"};
-    t_data d2 = {2, "Chaine de 2\0"};
-    t_data *ptr = (t_data *)malloc(sizeof(t_data));
-
-    printf("Enfile [%s] [%d]\n", d1.name, d1.id);
-    enqueue_queue(my_queue, &d1, sizeof(t_data));
-    printf("Enfile [%s] [%d]\n", d2.name, d2.id);
-    enqueue_queue(my_queue, &d2, sizeof(t_data));
-
-    printf("Etat de la file : \n");
-    queue_print_st(my_queue);
-    printf("Nombre d'element de la liste : [%d]\n", queue_length(my_queue));
-
-    ptr = (t_data *)(dequeue_queue(my_queue));
-    printf("\n Defile name: [%s] id: [%d]\n", ptr->name, ptr->id);
-
-    /* printf (" Defile %d \n", *(int *) dequeue_queue(my_queue));
-     printf (" Defile %d \n", *(int *) dequeue_queue(my_queue));*/
-    printf("\nEtat de la liste");
-    queue_print_st(my_queue);
-
-    printf("Nombre d'element de la liste : [%d]\n", queue_length(my_queue));
-
-    delete_queue(my_queue);
-    printf("\nLa liste a été vidée\n");
-    free(ptr);
-    free(my_queue);
-}
-/*----------------------------------------------------------------*/

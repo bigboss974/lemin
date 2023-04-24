@@ -1,16 +1,14 @@
 #ifndef __QUEUE__H__
 #define __QUEUE__H__
-//#include "lemin.h"
 
 #ifndef TYPE_BOOL
 #define TYPE_BOOL
 typedef enum
 {
-    false,
-    true
-}Bool;
+    false,  //0
+    true    //1
+} Bool;
 #endif
-
 
 /* Définition d'un file */
 /* Element d'une file*/
@@ -32,7 +30,6 @@ typedef struct
 } t_data;
 
 /* Prototypes */
-void menu(void);                           // TestE des appels de fonction
 Bool is_empty_queue(Queue);                // Teste si la liste est vide
 Queue init_queue(void);                    // Créer un file vide
 void enqueue_queue(Queue, void *, size_t); // Enfile un élément

@@ -4,9 +4,6 @@ Recupere les lignes en entree stdin et les stocke dans une liste chainéé
 */
 void get_flux(t_lemin *lemin)
 {
-    #ifdef VERBOSE
-        printf ("====== Enter get_flux () ======\n");
-    #endif
 
     char *line = NULL;
     size_t line_buf_size = 0;
@@ -25,11 +22,7 @@ void get_flux(t_lemin *lemin)
            tmp->line = strndup(line, line_size-1);
            l_push_back(lemin->l_lines, (void *)tmp, sizeof(tmp));
         }
-    }
-
-   #ifdef VERBOSE
-        l_view_line(lemin->l_lines);
-        printf ("Exit get_flux ()\n");
-    #endif
+    } //while
+    free (line);
 }
 
