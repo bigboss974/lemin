@@ -15,3 +15,6 @@ salle4-salle7
 salle5-salle1
 salle5-salle6
 salle6-salle7
+salle8 8 8
+salle7-salle8
+
